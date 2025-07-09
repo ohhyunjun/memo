@@ -6,12 +6,12 @@ import lombok.Getter;
 @Getter
 public class MemoResponseDto {
     private Long id;
-    private String usernaem;
+    private String username;
     private String contents;
 
     public MemoResponseDto(Memo memo) {
         this.id= memo.getId();
-        this.usernaem = memo.getUsername();
+        this.username = memo.getUsername();
         this.contents = memo.getContents();
     }
 

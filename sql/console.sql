@@ -163,4 +163,57 @@ WHERE s.major_code = m.major_code;
 
 
 #---------------------------
+#https://ohnyong.notion.site/sql-prac
 #여기다 숙제 풀이쓰기
+#DROP DATABASE ProblemPractice;
+show databases;
+create database ProblemPractice;
+use ProblemPractice;
+CREATE TABLE student(
+    student_code VARCHAR(100) PRIMARY KEY COMMENT '수강생코드',
+    name VARCHAR(100) NOT NULL COMMENT '이름',
+    exam_seq int not null comment '시험주차',
+    score decimal(10, 2) not null comment '시험점수'
+);
+create table MANAGER(
+    id bigint primary key,
+    name varchar(100) not null,
+    student_code varchar(100) not null,
+    constraint manager_fk_student_code foreign key(student_code) references student(student_code)
+);
+alter table manager modify column id bigint auto_increment;
+
+
+insert into student values ('s1','아만다','2','3.2'),
+                           ('s2','도만','3','2.5'),
+                           ('s3','크리스','4','4.1'),
+                           ('s4','지민','2','2.0'),
+                           ('s5','오링','1','1.2'),
+                           ('s6','파이드','1','2.6'),
+                           ('s7','제임스','3','3.8'),
+                           ('s8','톰','4','3.5'),
+                           ('s9','민지', '2','2.9');
+
+insert into manager (name, student_code) values ('managerA','s1'),
+                                                ('managerA','s2'),
+                                                ('managerA','s3'),
+                                                ('managerA','s4'),
+                                                ('managerA','s5');
+insert into manager (name, student_code) values ('managerB','s6'),
+                                                ('managerB','s7'),
+                                                ('managerB','s8'),
+                                                ('managerB','s9');
+
+select s.name, s.exam_seq, s.score
+from student s
+join manager m on s.student_code = m.student_code
+where m.name = 'managerA';
+
+alter table manager drop foreign key manager_fk_student_code;
+
+alter table manager add constraint manager_fk_student_code
+    foreign key(student_code) references student(student_code) on DELETE cascade;
+
+delete
+from student
+where student_code = 's1';

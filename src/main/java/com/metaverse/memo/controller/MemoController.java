@@ -3,18 +3,20 @@ package com.metaverse.memo.controller;
 import com.metaverse.memo.domain.Memo;
 import com.metaverse.memo.dto.MemoRequestDto;
 import com.metaverse.memo.dto.MemoResponseDto;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api")
 public class MemoController {
-    // 임시 데이터베이스(내장 메모리 배열)
-    private final Map<Long, Memo> memoList = new HashMap<>();
+    private  final JdbcTemplate jdbcTemplate;
+    public MemoController(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @PostMapping("/memos")
     public MemoResponseDto createMemo(@RequestBody MemoRequestDto memoRequestDto) {

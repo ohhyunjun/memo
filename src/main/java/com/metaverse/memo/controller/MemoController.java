@@ -80,23 +80,22 @@ public class MemoController {
             throw new IllegalArgumentException("해당 ID의 메모는 존재하지 않습니다");
         }
     }
-/*
+
     @DeleteMapping("/memos/{id}")
     public Long deleteMemo(@PathVariable Long id) {
         // 해당 id의 메모가 데이터베이스에 존재하는지 확인
-        if (memoList.containsKey(id)) {
-            // 해당 메모 가져오기
-            Memo memo = memoList.get(id);
+        Memo memo = findById(id);
 
-            // 메모 삭제
-            memoList.remove(id);
+        // 메모 삭제
+        if(memo != null){
+            String sql = "DELETE FROM memo WHERE id = ?";
+            jdbcTemplate.update(sql, id);
             return id;
-        }
-        else {
-            throw new IllegalArgumentException("선택한 id의 메모는 존재하지 않습니다.");
+        }else{
+            throw new IllegalArgumentException("해당 ID의 메모는 존재하지 않습니다.");
         }
     }
-    */
+
     private Memo findById(Long id) {
         //DB 조회
         String sql = "SELECT * FROM memo WHERE id = ?";

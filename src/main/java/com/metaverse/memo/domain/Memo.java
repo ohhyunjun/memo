@@ -5,13 +5,16 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Table(name = "memo")
+@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Memo {
+public class Memo extends TimeStamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Id 자동 숫자 증가
     private Long id;

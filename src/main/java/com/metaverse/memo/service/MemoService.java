@@ -30,7 +30,10 @@ public class MemoService {
     }
 
     public List<MemoResponseDto> getMemos() {
-        List<MemoResponseDto> responseList = memoRepository.findAll().stream().map(MemoResponseDto::new).toList();
+        //List<MemoResponseDto> responseList = memoRepository.findAll().stream().map(MemoResponseDto::new).toList(); // 기본 조회 메서드 호출
+        // QueryMethod 사용 정렬 방식(OrderBy절) 추가
+        List<MemoResponseDto> responseList = memoRepository.findAllByOrderByCreatedAtDesc()
+                .stream().map(MemoResponseDto::new).toList();
         return responseList;
     }
 
